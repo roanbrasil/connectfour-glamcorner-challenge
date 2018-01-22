@@ -1,7 +1,6 @@
 package com.glamcorner.model;
 
-import com.glamcorner.controller.Board;
-import com.glamcorner.view.Console;
+import com.glamcorner.controller.Game;
 
 public class HumanPlayer extends Player{
 
@@ -9,7 +8,7 @@ public class HumanPlayer extends Player{
         super(name);
     }
     @Override
-    public int getChoiceOfNextMove(Board board, Console console) {
-        return console.getUserMove(board);
+    public int getChoiceOfNextMove(Game game) {
+        return game.getUserMove();
     }
 }

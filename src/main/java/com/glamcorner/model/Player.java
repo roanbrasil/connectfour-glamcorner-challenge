@@ -1,7 +1,6 @@
 package com.glamcorner.model;
 
-import com.glamcorner.controller.Board;
-import com.glamcorner.view.Console;
+import com.glamcorner.controller.Game;
 
 public abstract class Player {
     String playerName;
@@ -19,10 +18,9 @@ public abstract class Player {
     }
     /**
      * Gets and returns the player's choice of move
-     * @param board current game state
-     * @param console the object that displays the game
+     * @param game current game state
      * @return move chosen by the player, in the range
      * 0 to Connect4State-1
      */
-    public abstract int getChoiceOfNextMove(Board board, Console console);
+    public abstract int getChoiceOfNextMove(Game game);
 }

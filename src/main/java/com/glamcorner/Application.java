@@ -1,6 +1,6 @@
 package com.glamcorner;
 
-import com.glamcorner.view.Console;
+import com.glamcorner.controller.Game;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,14 +9,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Application {
 
 	@Autowired
-	public static Console console;
+	public static Game game;
 
-	public Application(Console console) {
-		this.console = console;
+	public Application(Game game) {
+		this.game = game;
 	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
-		console.initToPlay();
+		game.initToPlay();
 	}
 }

@@ -1,12 +1,13 @@
 package com.glamcorner.model;
 
-import com.glamcorner.logic.AlphaBetaPruning;
-import com.glamcorner.logic.ArtificialIntelligenceAlgorithm;
-import com.glamcorner.controller.Board;
-import com.glamcorner.view.Console;
+import com.glamcorner.ai.AlphaBetaPruning;
+import com.glamcorner.ai.ArtificialIntelligenceAlgorithm;
+import com.glamcorner.controller.Game;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class ComputerPlayer extends Player {
 
+    @Autowired
     ArtificialIntelligenceAlgorithm artificialIntelligenceAlgorithm;
     private int depth;
 
@@ -16,16 +17,15 @@ public class ComputerPlayer extends Player {
      * @param name
      * @param maxDepth
      */
-    public ComputerPlayer(String name, int maxDepth) {
+    public ComputerPlayer(String name, int maxDepth, ArtificialIntelligenceAlgorithm artificialIntelligenceAlgorithm) {
         super(name);
         depth = maxDepth;
-        this.artificialIntelligenceAlgorithm = new AlphaBetaPruning();
+        this.artificialIntelligenceAlgorithm =  artificialIntelligenceAlgorithm;
     }
     @Override
-    public int getChoiceOfNextMove(Board board, Console console) {
+    public int getChoiceOfNextMove(Game game) {
         // Returns the computer play's choice using alpha-beta search
-        int move = this.artificialIntelligenceAlgorithm.pickMove(board, depth, -Integer.MAX_VALUE, Integer.MAX_VALUE).getMove();
-        console.reportMove(move, board.getPlayerToMove().getName());
+        int move = this.artificialIntelligenceAlgorithm.pickMove(game, depth, -Integer.MAX_VALUE, Integer.MAX_VALUE).getMove();
         return move;
     }
 }
