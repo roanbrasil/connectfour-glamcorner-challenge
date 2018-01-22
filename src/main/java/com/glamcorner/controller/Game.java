@@ -10,10 +10,13 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import java.util.Arrays;
+import java.util.Observable;
+
 @Setter
 @Getter
 @Controller
-public class Game {
+public class Game extends Observable{
 
     public final static int ROWS = 6; // Board height
     public final static int COLS = 7; // Board width
@@ -23,6 +26,7 @@ public class Game {
     public final static char [] PIECES = {RED, YELLOW};
     private char [][] board;
     private int playerToMoveNum; // 0 or 1 for first and second player
+    private int move;
     @Autowired
     Console console; //view
 
@@ -88,11 +92,11 @@ public class Game {
     }
 
     public int getUserMove() {
+
         int col; // The pit under consideration
         System.out.println();
 
         col = this.console.getIntAnswer("Column to drop a checker into, " + this.getPlayerToMove().getName() + "? ");
-
         while(this.isValidMove(col)==false)
         {
             System.out.println("Illegal move. Try again. Please choose the column between 1 to 7");
@@ -345,6 +349,8 @@ public class Game {
                 playerArr[0] = this.makeHumanPlayer();
                 playerArr[1] = this.makeComputerPlayer(depthLevel);
         }
+        this.addObserver(playerArr[0]);
+        this.addObserver(playerArr[1]);
         return playerArr;
     }
 
@@ -357,9 +363,10 @@ public class Game {
 
             this.display();
             while (!this.isGameOver()) {
-                int move = this.getPlayerToMove().getChoiceOfNextMove(this);
-                this.console.reportMove(move, this.getPlayerToMove().getName());
-                this.makeMove(move);
+                notifyChange();
+//                int move = this.getPlayerToMove().getChoiceOfNextMove(this);
+                this.console.reportMove(this.getMove(), this.getPlayerToMove().getName());
+                this.makeMove(this.getMove());
                 this.display();
             }
             if (this.isFull())
@@ -372,5 +379,12 @@ public class Game {
                 break;
             }
         }
+    }
+    private void notifyChange(){
+        // Call Observable method which sets flag that state changed
+        setChanged();
+
+        // Call Observable method with next player (i.e. R or Y)
+        notifyObservers(getPlayerToMoveNum());
     }
 }

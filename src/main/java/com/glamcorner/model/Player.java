@@ -2,7 +2,9 @@ package com.glamcorner.model;
 
 import com.glamcorner.controller.Game;
 
-public abstract class Player {
+import java.util.Observer;
+
+public abstract class Player implements Observer {
     String playerName;
     /**
      * @param name player's name

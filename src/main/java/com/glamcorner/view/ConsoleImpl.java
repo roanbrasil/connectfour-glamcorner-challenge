@@ -3,6 +3,8 @@ package com.glamcorner.view;
 import org.springframework.stereotype.Component;
 
 import java.util.InputMismatchException;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Scanner;
 
 @Component
